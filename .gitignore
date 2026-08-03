@@ -1,0 +1,19 @@
+# Superseded 2025 guides. Kept on disk for reference while the 2026 rewrite is in
+# progress, but never published -- they contradict the current stack (Unity 2022.3,
+# Oculus XR Plugin, GitHub Desktop password sign-in) and must not reach students.
+Guides/Old/
+
+# LaTeX build artefacts from the course guide
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# Operating system files
+.DS_Store
+._*
+Thumbs.db
+desktop.ini

@@ -1,0 +1,1012 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[a4paper,margin=18mm,headheight=16pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{Arial}
+\setmonofont{Menlo}[Scale=0.82]
+
+\usepackage{xcolor}
+\definecolor{Ink}{HTML}{172033}
+\definecolor{Muted}{HTML}{596579}
+\definecolor{Blue}{HTML}{2855D9}
+\definecolor{BlueLight}{HTML}{EEF3FF}
+\definecolor{Amber}{HTML}{A86200}
+\definecolor{AmberLight}{HTML}{FFF7E8}
+\definecolor{Green}{HTML}{237A57}
+\definecolor{Red}{HTML}{B42318}
+\definecolor{Rule}{HTML}{D9DFEA}
+\definecolor{Paper}{HTML}{F5F7FB}
+
+\usepackage{microtype}
+\usepackage{etoolbox}
+\usepackage{needspace}
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=5mm,itemsep=2pt,topsep=3pt}
+\setlist[enumerate]{leftmargin=7mm,itemsep=3pt,topsep=3pt}
+\providecommand{\tightlist}{\setlength{\itemsep}{2pt}\setlength{\parskip}{0pt}}
+
+\usepackage{titlesec}
+\titleformat{\part}[block]{\huge\bfseries\color{Blue}}{}{0pt}{}
+\titlespacing*{\part}{0pt}{0pt}{14pt}
+\titleformat{\section}{\Large\bfseries\color{Ink}}{\thesection}{0.7em}{}
+\titleformat{\subsection}{\large\bfseries\color{Ink}}{\thesubsection}{0.65em}{}
+\titlespacing*{\section}{0pt}{18pt}{7pt}
+\titlespacing*{\subsection}{0pt}{13pt}{5pt}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+
+\usepackage{calc}
+\usepackage{booktabs,tabularx,array,longtable}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\renewcommand{\arraystretch}{1.25}
+
+\usepackage[most]{tcolorbox}
+\tcbset{enhanced,boxrule=0pt,arc=1.5mm,left=4mm,right=4mm,top=3mm,bottom=3mm}
+\newtcolorbox{keybox}[1][]{colback=BlueLight,colframe=BlueLight,
+  borderline west={2pt}{0pt}{Blue},
+  before upper={\ifstrempty{#1}{}{{\bfseries #1}\par\vspace{1pt}}}}
+\newtcolorbox{warnbox}[1][]{colback=AmberLight,colframe=AmberLight,
+  borderline west={2pt}{0pt}{Amber},
+  before upper={\ifstrempty{#1}{}{{\bfseries #1}\par\vspace{1pt}}}}
+\newtcolorbox{plainbox}[1][]{colback=Paper,colframe=Paper,
+  borderline west={2pt}{0pt}{Rule},
+  before upper={\ifstrempty{#1}{}{{\bfseries #1}\par\vspace{1pt}}}}
+
+\usepackage{fontawesome5}
+\newcommand{\yes}{\textcolor{Green}{\faCheck}}
+\newcommand{\no}{\textcolor{Red}{\faTimes}}
+\newcommand{\errdot}{\textcolor{Red}{\faCircle}}
+\newcommand{\warndot}{\textcolor{Amber}{\faCircle}}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small\color{Muted}OpenXR in Unity — Setup and Workflow Guide}
+\rhead{\small\color{Muted}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{Rule}\leaders\hrule height \headrulewidth\hfill}}
+
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{colorlinks=true,linkcolor=Blue,urlcolor=Blue}
+\usepackage{bookmark}
+
+\begin{document}
+
+% ---------------------------------------------------------------------------
+% Title page
+% ---------------------------------------------------------------------------
+\begin{titlepage}
+\pagecolor{Ink}
+\color{white}
+\vspace*{42mm}
+{\fontsize{14}{17}\selectfont\bfseries COURSE SETUP GUIDE\par}
+\vspace{7mm}
+{\fontsize{34}{39}\selectfont\bfseries OpenXR in Unity\par}
+\vspace{5mm}
+{\fontsize{17}{22}\selectfont Set up once, then two workflows for the rest of the
+semester\par}
+\vspace{16mm}
+\begin{tcolorbox}[colback=white!8!Ink,colframe=white!18!Ink,boxrule=.6pt,arc=2mm]
+\color{white}
+\textbf{Meta Quest 2 / 3 / 3S. Windows and macOS.}\\[2mm]
+This course is OpenXR only — Unity's own vendor-neutral packages. Not the Meta XR
+All-in-One SDK, and not Building Blocks.
+\end{tcolorbox}
+\vfill
+{\large Semester 2, 2026\par}
+\vspace{4mm}
+{\small\color{Rule}Guide version 1.0\par}
+\end{titlepage}
+\nopagecolor
+\color{Ink}
+
+\tableofcontents
+\clearpage
+
+This guide has two halves.
+
+\textbf{Part 1 is setup.} You do it once, and then you leave it alone. It ends with a scene of
+your own running standalone on a headset.
+
+\textbf{Part 2 is workflows.} These are the two ways you will test your work, week after week,
+for the rest of the course. You will come back to this half constantly.
+
+Everything here assumes you have already worked through \texttt{Software\_and\_Frameworks.md} and
+the Unity + GitHub guide, that you have Unity 6.3 LTS with Android Build Support
+installed, and that you have a Unity project sitting inside a working repository. It
+assumes no prior XR experience at all.
+
+\begin{warnbox}[One warning before you start]
+This course uses \textbf{OpenXR only} --- Unity's own
+packages on the open standard. We do \textbf{not} use the Meta XR All-in-One SDK and we do
+\textbf{not} use Building Blocks. Most Quest tutorials you find online do use them. Those
+tutorials aren't wrong, they're just a different stack, and installing both at once
+will break your project in ways that are genuinely hard to diagnose. If a tutorial
+starts by importing the Meta XR SDK, close it.
+\end{warnbox}
+
+
+\clearpage
+\part*{Part 0 --- Before you start}
+
+\section*{Prerequisites}\label{prerequisites}
+\addcontentsline{toc}{section}{Prerequisites}
+
+You need all of these before section 1. Every one of them is covered in an earlier guide.
+
+\begin{itemize}
+\tightlist
+\item
+  Unity Hub installed, and \textbf{Unity 6.3 LTS} (\texttt{6000.3.x}) installed through it
+\item
+  Unity installed with \textbf{Android Build Support}, including \textbf{OpenJDK} and
+  \textbf{Android SDK \& NDK Tools}
+\item
+  A course repository with the supplied \texttt{.gitignore} already in place
+\item
+  A Unity project inside that repository that opens without errors
+\item
+  A Meta Quest 2, 3, or 3S, charged, with its controllers paired
+\item
+  \textbf{A USB-C cable that carries data.} Charge-only cables look identical and will waste
+  an afternoon. Everything in this guide is done tethered
+\end{itemize}
+
+\section*{The two workflows}\label{the-two-workflows}
+\addcontentsline{toc}{section}{The two workflows}
+
+There are two ways you will test your work, and both run identically on Windows and
+macOS. You need both --- they answer different questions.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Workflow
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+What it's for
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Speed
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Headset
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{A --- Build to the headset} & The truth. Real performance, real tracking, real comfort. & Minutes & Required \\
+\textbf{B --- XR Device Simulator} & Fast iteration in the Editor with keyboard and mouse. & Seconds & Not required \\
+\end{longtable}
+
+A third option, \textbf{Quest Link}, exists on Windows only and is described briefly in
+section 8. We don't teach it, because these two cover everything and work on every
+machine on the course.
+
+
+\clearpage
+\part*{Part 1 --- Setup}
+
+\section{What OpenXR actually is}\label{what-openxr-actually-is}
+
+For most of VR's short history, every headset came with its own SDK. Code written for a
+Rift didn't run on a Vive. Vendors competed by locking developers in, and developers paid
+for it every time they wanted to ship somewhere new.
+
+\textbf{OpenXR} is the industry's answer to that. It's an open standard, managed by the Khronos
+Group --- the same people behind Vulkan and OpenGL --- that defines a common language between
+an application and a headset. Your app says ``give me the pose of the right hand'' or ``tell
+me when the trigger is pressed'', and whatever runtime is underneath answers in the same
+way, whether that's a Quest, a Vive, a Valve Index, or a headset that doesn't exist yet.
+
+The stack looks like this:
+
+\begin{verbatim}
+    Your Unity scene
+          ↓
+    XR Interaction Toolkit     ← grabbing, teleporting, UI. Unity's, vendor-neutral.
+          ↓
+    Unity OpenXR Plugin        ← translates Unity's XR API into OpenXR calls
+          ↓
+    OpenXR runtime             ← supplied by Meta on Quest, by Valve on Index, etc.
+          ↓
+    The headset
+\end{verbatim}
+
+You write against the top two layers. The bottom two swap out underneath you.
+
+\textbf{The Oculus XR Plugin.} Older tutorials use a Unity package called the Oculus XR
+Plugin, which was the pre-OpenXR path for Quest development. It is deprecated. Don't
+install it --- and treat the rest of any tutorial that recommends it with suspicion, since
+it predates the current toolchain entirely.
+
+\textbf{The Meta XR SDK and Building Blocks.} Meta's own SDK is current, well maintained, and
+genuinely good; its Building Blocks drop a working camera rig or hand tracking into a
+scene in seconds, and most Quest tutorials online use them. We don't, for two reasons.
+What you learn on OpenXR and the XR Interaction Toolkit transfers to any headset, while
+Building Block prefab names transfer nowhere. And when a Building Block works you learn
+nothing from it, whereas the rig you assemble by hand in section 6 is one you can debug
+when it breaks.
+
+\begin{warnbox}[Do not install both stacks]
+The Meta SDK and Unity's OpenXR packages both want to
+configure the same project settings, own the same camera, and drive the same input.
+Installing the Meta SDK ``just to try a tutorial'' and then removing it leaves settings
+behind. Symptoms are listed in \hyperref[troubleshooting]{Section~13}.
+\end{warnbox}
+
+
+\section{Headset and computer preparation}\label{headset-and-computer-preparation}
+
+\textbf{The course headsets are already set up.} Developer Mode is enabled on all of them, and
+they are ready to receive your builds. You do not need a Meta developer account, an
+organisation, or the Meta Horizon mobile app to work on this course.
+
+There is one thing you do have to do, and it is per-computer:
+
+\textbf{Authorise your computer.} Plug the headset into your machine with the USB-C data cable
+and put the headset on. A prompt appears \emph{inside the headset} asking whether to allow USB
+debugging. Tick \textbf{Always allow from this computer} and accept.
+
+You will not see this prompt on your monitor. It is in the headset. Students routinely sit
+staring at a failed build for ten minutes with an unanswered dialogue floating in front of
+a headset on the desk beside them.
+
+You will need to do this again on each new computer you work at, and sometimes again after
+a headset system update.
+
+\begin{plainbox}[Using your own headset]
+If you're working on a personal Quest rather than a course
+one, you'll need to enable Developer Mode on it yourself first: create a Meta developer
+account, create an organisation on the developer dashboard, then turn on Developer Mode
+for your headset in the Meta Horizon mobile app and restart the headset. Links are in
+\texttt{Software\_and\_Frameworks.md}.
+\end{plainbox}
+
+\begin{keybox}[Checkpoint]
+Open Meta Quest Developer Hub (MQDH) and check that your headset appears
+as connected over USB. If it does, you're ready. If it doesn't, fix it now --- nothing
+later in this guide will work until this does.
+\end{keybox}
+
+
+\section{Switching the project to Android}\label{switching-the-project-to-android}
+
+The Quest runs Android. Before Unity can build anything for it, the project has to be
+switched over.
+
+\subsection{Switch platform}\label{switch-platform}
+
+\textbf{File → Build Profiles} → in the \textbf{Platforms} list, select \textbf{Android} →
+\textbf{Switch Platform}.
+
+This re-imports every asset in the project into Android-compatible formats. On an empty
+project it takes a moment. On a project full of textures it can take a long while. Do it
+early, while the project is still small.
+
+Set \textbf{Texture Compression} to \textbf{ASTC}, which is what Quest hardware wants.
+
+\subsection{Player settings that matter}\label{player-settings-that-matter}
+
+\textbf{Edit → Project Settings → Player}, with the Android tab selected.
+
+Under \textbf{Other Settings}:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Setting
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Value
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Why
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Company Name} / \textbf{Product Name} & Anything sensible & These generate your package name --- set them before your first build \\
+\textbf{Graphics APIs} & \textbf{Vulkan} & The modern path on Quest. Remove OpenGLES3 if it's listed above Vulkan \\
+\textbf{Scripting Backend} & \textbf{IL2CPP} & Required --- Mono won't build for Quest \\
+\textbf{Target Architectures} & \textbf{ARM64} only & Untick ARMv7. Quest hardware is 64-bit and builds are smaller without it \\
+\textbf{Minimum API Level} & \textbf{Android 12L (API 32)} & Meta's floor for current Horizon OS \\
+\textbf{Active Input Handling} & \textbf{Input System Package (New)} & The Interaction Toolkit needs it. Changing this restarts the Editor \\
+\end{longtable}
+
+Under \textbf{Resolution and Presentation}, tick \textbf{Optimized Frame Pacing}.
+
+\subsection{Quality settings}\label{quality-settings}
+
+\textbf{Edit → Project Settings → Quality}. Standalone VR is a mobile GPU rendering two eyes
+at high refresh rate, and it will punish you for treating it like a desktop.
+
+Pick a low or medium quality level as the Android default, and inside it keep shadows
+modest and anti-aliasing at \textbf{4x MSAA} (MSAA is comparatively cheap on this hardware and
+matters a lot for how solid edges look up close).
+
+Don't over-tune this now. Get a build running first, then optimise against real numbers
+from a real device.
+
+
+\section{Installing the XR packages}\label{installing-the-xr-packages}
+
+All of these come from Unity's own package registry, inside the project. Nothing here is
+downloaded from a website or imported from the Asset Store.
+
+Install in this order --- each one expects the previous.
+
+\subsection{XR Plugin Management}\label{xr-plugin-management}
+
+\textbf{Edit → Project Settings → XR Plug-in Management} → \textbf{Install XR Plugin Management}.
+
+This is the settings panel where you choose an XR backend per platform. It doesn't do
+anything by itself.
+
+\subsection{Unity OpenXR Plugin}\label{unity-openxr-plugin}
+
+Still in \textbf{XR Plug-in Management}, select the \textbf{Android} tab (the little robot icon) and
+tick \textbf{OpenXR}. Unity installs the OpenXR plugin for you.
+
+You'll see a red warning icon appear next to it. That's expected --- it's Project Validation
+telling you OpenXR isn't configured yet. Section 5 fixes it.
+
+\subsection{XR Interaction Toolkit}\label{xr-interaction-toolkit}
+
+\textbf{Window → Package Manager} → \textbf{Unity Registry} → search \textbf{XR Interaction Toolkit} →
+\textbf{Install}.
+
+Then, still in Package Manager with the toolkit selected, open the \textbf{Samples} tab and
+import:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Starter Assets} --- this contains the default input action maps that bind physical
+  controller buttons to named actions. You need it. Without it you have a camera rig with
+  no input.
+\item
+  \textbf{XR Device Simulator} --- the fast-iteration workflow from section 11. Import it now
+  while you're here.
+\end{itemize}
+
+\subsection{Later additions}\label{later-additions}
+
+You don't need these yet. They arrive with the activities that use them, and the
+activity brief will tell you.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{XR Hands} (\texttt{com.unity.xr.hands}) --- hand tracking instead of controllers
+\item
+  \textbf{AR Foundation} + \textbf{Unity OpenXR: Meta} --- passthrough and mixed reality on Quest 3
+  and 3S
+\end{itemize}
+
+\begin{keybox}[Commit now]
+Your \texttt{Packages/manifest.json} and \texttt{Packages/packages-lock.json} have
+changed. Those two files are how a different machine reconstructs exactly this package
+set, so they belong in Git. Commit before you go further.
+\end{keybox}
+
+
+\section{Configuring OpenXR}\label{configuring-openxr}
+
+Installing OpenXR isn't the same as configuring it. This section is where most setup
+failures actually happen, and it's worth going slowly.
+
+\subsection{Enable the Meta feature group}\label{enable-the-meta-feature-group}
+
+\textbf{Edit → Project Settings → XR Plug-in Management} → \textbf{Android} tab.
+
+Under the OpenXR entry you'll find a list of \textbf{OpenXR Feature Groups}. Tick \textbf{Meta Quest
+Support}.
+
+This is what tells the OpenXR plugin to produce a build the Quest runtime will accept ---
+the correct Android manifest entries, the right permissions, the device declaration.
+Without it your app will build happily and then refuse to launch.
+
+\subsection{Interaction profiles}\label{interaction-profiles}
+
+\textbf{Edit → Project Settings → XR Plug-in Management → OpenXR} → \textbf{Android} tab.
+
+Find \textbf{Enabled Interaction Profiles} and add:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Oculus Touch Controller Profile}
+\end{itemize}
+
+An interaction profile is OpenXR's description of a specific physical controller --- which
+buttons exist, where they are, what they're called. Your input actions bind to profiles.
+\textbf{If this list is empty, your controllers will track as objects in space but no button
+will do anything}, which is a maddening bug to debug from scratch.
+
+If you're on Quest 3 or 3S you can add \textbf{Meta Quest Touch Plus Controller Profile} as
+well. Adding profiles you don't own is harmless.
+
+\subsection{Render mode}\label{render-mode}
+
+On the same page, set \textbf{Render Mode} to \textbf{Single Pass Instanced}.
+
+VR renders the scene twice, once per eye. Single Pass Instanced does that in one pass
+instead of two and is close to free performance. Leave it on unless something specific
+breaks.
+
+\subsection{Project Validation}\label{project-validation}
+
+\textbf{Edit → Project Settings → XR Plug-in Management → Project Validation}.
+
+This panel checks your project against everything OpenXR and the Meta feature group
+expect, and it is the single most useful diagnostic tool in this whole guide. Get into the
+habit of coming back here whenever something is strange.
+
+Each issue has a \textbf{Fix} button. Most can be fixed automatically. Work top to bottom until
+the Android tab is clean.
+
+A note on the two icons:
+
+\begin{itemize}
+\tightlist
+\item
+  \errdot~\textbf{Errors} --- must be fixed. Your build will fail or misbehave.
+\item
+  \warndot~\textbf{Warnings} --- should usually be fixed, but read them. Some are recommendations
+  about quality settings that you may have deliberately chosen otherwise.
+\end{itemize}
+
+\begin{keybox}[Checkpoint]
+Android tab of Project Validation shows no red errors. If it does, don't
+continue --- nothing in section 6 will work, and you'll waste time debugging a scene when
+the problem is in settings.
+\end{keybox}
+
+
+\section{The known-good scene}\label{the-known-good-scene}
+
+Now you build the smallest possible scene that proves the whole stack works. It has a
+floor, a thing to look at, and a camera rig you can move your head inside.
+
+It is deliberately trivial. That's the point --- \textbf{when this scene fails, the failure is in
+your setup and nothing else}. Keep it in your project all semester. Every time something
+mysterious breaks in a real activity, run this scene first to find out whether the problem
+is your work or your machine.
+
+You will also run this exact scene through both workflows in Part 2, so that you know what
+``working'' looks like in each of them before you have real work on the line.
+
+\subsection{Create the scene}\label{create-the-scene}
+
+\textbf{File → New Scene} → choose the \textbf{Basic (URP)} template → save it as
+\texttt{KnownGood.unity} somewhere sensible, like \texttt{Assets/Scenes/}.
+
+Delete the \textbf{Main Camera} that came with the template. The XR rig brings its own.
+
+\subsection{Build the XR rig}\label{build-the-xr-rig}
+
+\textbf{GameObject → XR → XR Origin (VR)}.
+
+Look at what that just created in the Hierarchy, because this is the part worth
+understanding:
+
+\begin{verbatim}
+XR Origin (XR Rig)          ← the player's position in the world. Move THIS to move the player.
+└── Camera Offset           ← height compensation, managed for you
+    ├── Main Camera         ← the headset. Its transform is driven by tracking — never set it yourself.
+    ├── Left Controller     ← driven by the left controller's tracked pose
+    └── Right Controller
+\end{verbatim}
+
+The mental model that saves the most confusion later: \textbf{the camera's position is an
+output, not an input.} It reports where the player's head is. If you want to move the
+player, you move the XR Origin, and the head keeps its offset within it. Trying to set the
+camera's transform directly is the most common beginner mistake in XR, and it fails in a
+way that makes people motion sick.
+
+An \textbf{XR Interaction Manager} object also appeared. It's the broker between things that
+can interact and things that can be interacted with. One per scene, and you can ignore it.
+
+Select \textbf{XR Origin} and set \textbf{Tracking Origin Mode} to \textbf{Floor}. This means y = 0 is
+the player's real floor, and a 1.7-metre-tall object will look 1.7 metres tall. On
+\textbf{Device} mode, y = 0 is wherever their head happened to be, and your whole scene will
+feel like it's floating.
+
+\subsection{Wire up input}\label{wire-up-input}
+
+Create an empty GameObject, name it \texttt{Input\ Action\ Manager}, and add the \textbf{Input Action
+Manager} component to it.
+
+In its \textbf{Action Assets} list, add one element and assign \textbf{XRI Default Input Actions} ---
+it came from the Starter Assets sample you imported in 4.3, under
+\texttt{Assets/Samples/XR\ Interaction\ Toolkit/.../Starter\ Assets/}.
+
+This component's only job is to enable those input actions at runtime. It is one component
+doing one small thing, and forgetting it produces a rig where everything tracks correctly
+and no button works --- the same symptom as a missing interaction profile, which is why
+these two are worth remembering as a pair.
+
+\subsection{Something to stand on and something to look at}\label{something-to-stand-on-and-something-to-look-at}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{GameObject → 3D Object → Plane}, position \texttt{(0,\ 0,\ 0)}. This is your floor.
+\item
+  \textbf{GameObject → 3D Object → Cube}, position \texttt{(0,\ 1.2,\ 2)}, scale \texttt{(0.3,\ 0.3,\ 0.3)}.
+\end{itemize}
+
+The cube is at roughly chest height, two metres in front of you. Its job is to give you
+something with an obvious real-world size, so that when you put the headset on you can
+immediately tell whether the scale of the world is right.
+
+Give both a material with some colour if you like. Flat grey is harder to judge depth
+against than you'd expect.
+
+\subsection{Add the scene to the build}\label{add-the-scene-to-the-build}
+
+\textbf{File → Build Profiles} → \textbf{Scene List} → \textbf{Add Open Scenes}, and make sure
+\texttt{KnownGood} is ticked and at the top.
+
+A scene that isn't in this list will not be in your build. ``Black screen on launch'' is
+very often just this.
+
+Save the scene. Commit.
+
+
+\section{Next time: start from the VR template}\label{next-time-start-from-the-vr-template}
+
+Everything in sections 3 to 6 was you adding XR to a project that didn't have it. That's
+the version worth doing once, because it's the version where you can see what each setting
+is for.
+
+For your next project, you don't have to do any of it. In \textbf{Unity Hub → New Project},
+choose the \textbf{VR} template. It arrives with XR Plugin Management installed, OpenXR enabled
+for Android, the XR Interaction Toolkit and its Starter Assets already imported, and a
+sample scene with a working rig --- the end state of Part 1, ready to go.
+
+Two things to know about it:
+
+\textbf{Check the settings anyway.} The template configures itself for a general OpenXR target,
+not specifically for Quest. Walk section 5 again --- the \textbf{Meta Quest Support} feature
+group and the \textbf{Oculus Touch Controller Profile} in particular --- and run \textbf{Project
+Validation} before you build. It takes two minutes and it's the difference between a
+build that runs and a black screen.
+
+\textbf{You still need Android.} The template doesn't know you're targeting a headset that runs
+Android, so section 3 still applies: switch platform, then the player settings.
+
+Use the template from here on. Sections 3 to 6 are now your reference for when something
+in it looks wrong, and for understanding what the template did on your behalf.
+
+\textbf{Part 1 is done.} You have a configured project and a scene worth testing. Everything
+from here is about getting it in front of your eyes.
+
+
+\clearpage
+\part*{Part 2 --- Workflows}
+
+\section{Choosing a workflow}\label{choosing-a-workflow}
+
+You now have two ways to see your work. They are not alternatives to each other --- they
+are tools for different moments, and a good week uses both.
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+& \textbf{A --- On the headset} & \textbf{B --- XR Device Simulator} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Speed per iteration} & Minutes & Seconds \\
+\textbf{Headset required} & Yes & No \\
+\textbf{Real performance} & Yes & No \\
+\textbf{Real comfort and scale} & Yes & No \\
+\textbf{Real tracking and controllers} & Yes & No \\
+\textbf{Windows and macOS} & Yes & Yes \\
+\end{longtable}
+
+\subsection{The weekly loop}\label{the-weekly-loop}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Build the thing in the simulator.} Logic, layout, interactions, does the button do
+  what it should. This is where most of your hours go, and it needs no headset --- which
+  means you can work anywhere, without booking equipment.
+\item
+  \textbf{Confirm on the headset before you call it done.} Every session, not just at the end
+  of a project. Scale, comfort, reachability, and framerate are all things the simulator
+  cannot tell you, and all things that can invalidate an afternoon's work.
+\end{enumerate}
+
+\textbf{Work that has only ever run in the simulator isn't finished work.} If you take one
+thing from Part 2, take that.
+
+\subsection{A note on Quest Link}\label{a-note-on-quest-link}
+
+On Windows, Meta's desktop software offers \textbf{Quest Link}, which runs your scene live in
+the headset when you press Play --- no build step, real tracking. If you have a Windows
+machine and want to try it, install the Meta Horizon desktop app, connect by cable, set
+Meta Quest Link as the active OpenXR runtime, and enable OpenXR on the \textbf{Windows, Mac,
+Linux} tab of XR Plug-in Management as well as the Android tab (Play mode reads the
+desktop settings, not the Android ones --- that's the step people miss).
+
+We don't teach it, for two reasons: it doesn't exist on macOS, and its performance is a
+flattering lie, because your PC's graphics card is doing the rendering rather than the
+headset's chip. It can replace step 1 of the loop above. It cannot replace step 2.
+
+
+\section{Workflow A --- Building and running on the headset}\label{workflow-a-building-and-running-on-the-headset}
+
+This is the ground truth. Everything else is an approximation of it.
+
+\subsection{Your first build}\label{your-first-build}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Connect the headset by USB-C and put it on briefly to confirm there's no pending
+  authorisation prompt (section 2).
+\item
+  \textbf{File → Build Profiles} → \textbf{Android} → check your device is listed under
+  \textbf{Run Device}. Hit the refresh button beside it if it isn't.
+\item
+  Click \textbf{Build and Run}.
+\item
+  Choose an output folder. \textbf{Put it outside your repository} --- a folder called \texttt{Builds}
+  next to the project, not inside it. Builds are large, they change completely every
+  time, and they must never be committed. The course \texttt{.gitignore} covers the usual
+  locations, but the reliable habit is keeping them out of the repo entirely.
+\item
+  Wait.
+\end{enumerate}
+
+\subsection{What ``wait'' means}\label{what-wait-means}
+
+\textbf{Your first build will take a long time.} Ten to twenty minutes is normal, and on an
+older laptop it can be more. IL2CPP is converting your C\# to C++ and then compiling it for
+ARM64, and there's no shortcut.
+
+Later builds of the same project are much faster --- typically one to three minutes ---
+because most of that work is cached.
+
+Plan around this. Get one build through early in the semester, so that the twenty-minute
+version is behind you rather than in front of you on a day you need to show someone
+something.
+
+\subsection{Finding your app on the headset}\label{finding-your-app-on-the-headset}
+
+\textbf{Build and Run} launches the app for you. But once you take the headset off and go back
+to the home screen, your app is not with the ones you bought.
+
+In the headset: open the \textbf{Library}, then find the source or category filter, and choose
+\textbf{Unknown Sources}. Everything you have side-loaded lives there, listed by the Product
+Name you set back in section 3.2 --- which is why setting it to something recognisable
+mattered.
+
+\subsection{The repeat loop}\label{the-repeat-loop}
+
+Once the first build is through, your normal cycle is: change something in Unity →
+\textbf{Build and Run} → put the headset on. If your device is already connected and
+authorised, that's a couple of minutes.
+
+If the headset is connected and Unity can't see it, the fix is almost always in
+\hyperref[troubleshooting]{Section~13} under \emph{headset not detected}.
+
+\begin{keybox}[Checkpoint]
+Your cube is floating in front of you at roughly chest height, it stays
+put when you move your head, and both controllers appear where your hands are. If so,
+your entire setup is correct. This is the moment Part 1 was for.
+\end{keybox}
+
+
+\section{Meta Quest Developer Hub}\label{meta-quest-developer-hub}
+
+MQDH is Meta's desktop companion for the headset. It isn't a third workflow --- it sits
+alongside both of them, and it runs on \textbf{Windows and macOS} alike.
+
+You'll see it called \textbf{ODH} or \textbf{Oculus Developer Hub} in older documentation, and in
+Meta's own URLs. Same tool, older name.
+
+Connect over USB. MQDH also offers ADB over Wi-Fi, and on campus it is not worth the
+trouble --- the wireless here is unreliable enough that a dropped connection mid-deploy will
+cost you more time than the cable ever will.
+
+\subsection{What you'll use it for}\label{what-youll-use-it-for}
+
+\textbf{Deploying builds.} Drag an \texttt{.apk} onto the \textbf{Device Manager} and it installs. Useful
+when Unity's Build and Run is being uncooperative, and useful for handing a build to a
+teammate who doesn't have your project.
+
+\textbf{Mirroring the headset to your screen.} Start casting and what the wearer sees appears
+in a window on your computer:
+
+\begin{itemize}
+\tightlist
+\item
+  Your tutor can see what you're seeing without wrestling the headset off your head
+\item
+  Your team can watch a playtest and take notes at the same time
+\item
+  You can spot in a second that the problem is a controller not tracking
+\end{itemize}
+
+\textbf{Capturing video and screenshots.} Recording straight from the device beats filming a
+screen with your phone, whenever you need to show what your work actually looks like.
+
+\textbf{Reading logs.} When a build launches and immediately dies, the reason is in the log,
+and this is where you read it.
+
+\subsection{Set it up now, not later}\label{set-it-up-now-not-later}
+
+Install MQDH, connect your headset, and confirm casting works --- before you need it under
+pressure in a lab. It takes five minutes on a quiet afternoon.
+
+
+\section{Workflow B --- The XR Device Simulator}\label{workflow-b-the-xr-device-simulator}
+
+The simulator gives you a virtual headset and two virtual controllers driven by your
+keyboard and mouse, running in the Editor's Play mode. No headset, no build, no cable.
+It works identically on Windows and macOS.
+
+This is where most of your development time should go.
+
+\subsection{Setting it up}\label{setting-it-up}
+
+You imported the sample in section 4.3. Find it under
+\texttt{Assets/Samples/XR\ Interaction\ Toolkit/.../XR\ Device\ Simulator/}, and drag the simulator
+prefab into your scene.
+
+That's the whole setup. Press \textbf{Play}.
+
+\subsection{Driving it}\label{driving-it}
+
+An on-screen panel appears showing the current controls and which device you're currently
+driving. Read it --- it's the authoritative reference, and it updates as you change modes.
+
+The broad shape of it:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Mouse} moves the head, so you look around
+\item
+  \textbf{WASD} moves the rig through the world
+\item
+  Modifier keys hand control over to the \textbf{left} or \textbf{right} controller, so mouse and
+  keyboard drive that hand instead of your head
+\item
+  While driving a controller, other keys press its trigger, grip, and buttons
+\end{itemize}
+
+Spend two minutes with the on-screen panel the first time. Once the ``which thing am I
+currently driving'' idea clicks, the rest is muscle memory.
+
+\subsection{What the simulator will not tell you}\label{what-the-simulator-will-not-tell-you}
+
+This section matters more than the rest of this workflow. The simulator is a model of a
+headset, and every model leaves things out. It is silent --- not wrong, \emph{silent} --- about:
+
+\textbf{Performance.} Your Editor is running on a desktop GPU. The Quest runs on a mobile chip
+and needs to hold 72 frames a second in stereo. A scene that runs beautifully in the
+simulator can be unusable on device, and the simulator will never warn you.
+
+\textbf{Comfort.} Motion sickness is the single most common failure in student XR work, and
+it's invisible on a monitor. Snap turns, acceleration, moving the horizon, poorly placed
+UI --- you cannot evaluate any of it here.
+
+\textbf{Scale.} Objects look right on screen and wrong at real size, constantly. A doorway that
+looks fine in the Scene view can be intimidatingly small when you're standing in it.
+
+\textbf{Real tracking.} Real hands move differently to a mouse. Real controllers occlude,
+drift, and leave tracking volume. Real people can't reach behind themselves.
+
+\textbf{Reachability and ergonomics.} Whether the player can comfortably grab the thing you
+want them to grab, in the position a real body is actually in.
+
+\begin{keybox}
+Use the simulator to find out \textbf{whether it works}. Use the headset to find out
+\textbf{whether it's good}. Those are different questions.
+\end{keybox}
+
+
+\section{Working across two machines}\label{working-across-two-machines}
+
+Most of you will work on a lab PC some days and your own machine on others. The Unity +
+GitHub guide covers moving a project between computers; this is the XR-specific part of
+that.
+
+\subsection{What has to match}\label{what-has-to-match}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Unity version} & Exactly \texttt{6000.3.x}, the same as everyone else. Opening a project in a newer Editor upgrades it irreversibly for whoever opens it next \\
+\textbf{Package versions} & Handled for you, as long as \texttt{Packages/manifest.json} and \texttt{Packages/packages-lock.json} are committed \\
+\textbf{Project settings} & Committed, as long as \texttt{ProjectSettings/} is in the repo --- it is, in the supplied \texttt{.gitignore} \\
+\end{longtable}
+
+\subsection{What is per-machine and doesn't travel}\label{what-is-per-machine-and-doesnt-travel}
+
+None of this is in Git, and none of it should be. Expect to redo it the first time you sit
+at a new machine:
+
+\begin{itemize}
+\tightlist
+\item
+  Signing in to Unity Hub and applying your licence
+\item
+  Installing and signing in to MQDH
+\item
+  Authorising USB debugging, which is per computer \emph{and} per headset (section 2)
+\end{itemize}
+
+\subsection{What must never be committed}\label{what-must-never-be-committed}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{Library/}, \texttt{Temp/}, \texttt{Logs/}, \texttt{obj/} --- Unity regenerates all of it
+\item
+  \textbf{Builds and \texttt{.apk} files} --- large, binary, and completely disposable. Keep your build
+  output folder outside the repository entirely
+\item
+  Anything under \texttt{Assets/Samples/} that you haven't modified is fine to commit, and
+  simplest to leave in --- it's small, and it keeps everyone's input actions identical
+\end{itemize}
+
+\subsection{The habit that protects you}\label{the-habit-that-protects-you}
+
+\textbf{Make a device build at the end of every session}, whichever machine you're on. It costs
+two minutes, it confirms the project still builds from a clean-ish state, and it means you
+find out that Wednesday's work doesn't hold framerate on Wednesday.
+
+
+\clearpage
+\part*{Part 3 --- When it goes wrong}
+
+\section{Troubleshooting}\label{troubleshooting}
+
+One symptom per heading. Find yours.
+
+\subsection{Setup and build}\label{setup-and-build}
+
+\textbf{Unity says ``no Android SDK found'' or ``Android SDK not found at path''}
+The Android modules aren't installed, or Unity has lost track of them. Unity Hub →
+\textbf{Installs} → three-dot menu on 6.3 → \textbf{Add modules} → confirm \textbf{Android Build
+Support}, \textbf{OpenJDK}, and \textbf{Android SDK \& NDK Tools} are all ticked. If they are,
+check \textbf{Edit → Preferences → External Tools} and re-tick the ``use recommended version''
+boxes for SDK, NDK, and JDK.
+
+\textbf{The build fails with errors mentioning IL2CPP or ARMv7}
+Check section 3.2: \textbf{Scripting Backend} must be IL2CPP and \textbf{Target Architectures} must
+be ARM64 with ARMv7 unticked.
+
+\textbf{Project Validation shows red errors I don't understand}
+Press \textbf{Fix}. That's what it's there for. If a fix doesn't stick, note the exact wording
+and bring it to your tutor --- a persistent validation error usually means two packages are
+disagreeing, which is worth a second pair of eyes.
+
+\subsection{Device connection}\label{device-connection}
+
+\textbf{Unity or MQDH can't see the headset}
+Work through these in order:
+1. Is the cable a \textbf{data} cable? Charge-only USB-C cables are extremely common and look
+identical. Try another.
+2. Put the headset on and look for the USB debugging prompt (section 2).
+3. Is the headset awake? A sleeping headset drops off the connection.
+4. Try a different USB port --- prefer one directly on the machine over a hub or dock.
+5. Restart the headset.
+
+\textbf{It was working, and now Unity's Run Device list is empty}
+Usually the authorisation was revoked by a headset update. Unplug, replug, put the headset
+on, accept the prompt again.
+
+\subsection{On the headset}\label{on-the-headset}
+
+\textbf{The app builds successfully but I can't find it on the headset}
+It's under \textbf{Library → Unknown Sources} (section 9.3), listed by Product Name, not by
+project name.
+
+\textbf{Black screen when the app launches}
+In rough order of likelihood:
+1. Your scene isn't in the \textbf{Scene List} in Build Profiles (section 6.5)
+2. \textbf{Meta Quest Support} isn't ticked in the OpenXR feature groups (section 5.1)
+3. OpenXR isn't ticked at all on the \textbf{Android} tab of XR Plug-in Management
+4. Something threw an exception at startup --- read the log in MQDH
+
+\textbf{The app runs but the controllers don't do anything}
+Two causes, and they produce an identical symptom, so check both:
+1. \textbf{Enabled Interaction Profiles} is empty (section 5.2)
+2. The \textbf{Input Action Manager} is missing, or has no action asset assigned (section 6.3)
+
+\textbf{The controllers don't appear at all, or float in the wrong place}
+Confirm they're paired and charged. If they track in the headset's home environment but
+not in your app, it's an interaction profile problem --- see above.
+
+\textbf{Everything is the wrong size, or I'm standing underneath the floor}
+\textbf{Tracking Origin Mode} is set to \textbf{Device} instead of \textbf{Floor} on the XR Origin
+(section 6.2).
+
+\textbf{The scene moves when I move my head, and it makes me feel ill}
+Something is writing to the Main Camera's transform. Nothing in your code should ever do
+that --- move the XR Origin instead (section 6.2).
+
+\subsection{Simulator}\label{simulator}
+
+\textbf{The simulator prefab is in the scene but nothing responds}
+Check that \textbf{Active Input Handling} is set to \textbf{Input System Package (New)} (section
+3.2). Also confirm the Game view has focus --- the simulator only receives input when the
+Game view is the focused window. Click into it once.
+
+\textbf{I can look around but the controllers never move}
+You haven't taken control of a hand. Check the on-screen control panel for the modifier
+keys that switch which device you're driving (section 11.2).
+
+\subsection{The one that's hardest to spot}\label{the-one-thats-hardest-to-spot}
+
+\textbf{Strange, contradictory errors after following an online tutorial}
+If you installed the Meta XR All-in-One SDK at any point --- even briefly, even if you
+removed it --- you may have two XR stacks fighting. Signs: duplicate or unfamiliar entries
+in XR Plug-in Management, an \texttt{OVRManager} or \texttt{OVRCameraRig} anywhere in the project,
+Project Validation errors that reappear after you fix them, or compile errors mentioning
+\texttt{OVR} or \texttt{Oculus}.
+
+The reliable fix is to remove the Meta SDK completely, delete the \texttt{Library} folder, and
+reopen the project --- and if it's still confused, to check out a clean copy of the project
+from Git and reapply your work. This is a strong argument for committing often.
+
+
+\section{Where to get help}\label{where-to-get-help}
+
+\textbf{Start here, in this order:}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Project Validation} --- \texttt{XR\ Plug-in\ Management\ →\ Project\ Validation}. Genuinely fixes
+  a large share of problems by itself
+\item
+  \textbf{Section 13} above
+\item
+  \textbf{\texttt{Software\_and\_Frameworks.md}} --- every version number, package name, and official
+  documentation link for the whole stack lives there, and it's the authority if anything
+  in this guide contradicts it
+\item
+  \textbf{The known-good scene} from section 6 --- run it. It tells you instantly whether the
+  problem is your work or your setup, and that halves the search space
+\item
+  \textbf{Your tutor} --- bring the exact error text and what you've already tried
+\end{enumerate}
+
+\textbf{Official documentation} is linked from \texttt{Software\_and\_Frameworks.md} rather than
+repeated here, so that there's one place to keep it current: Unity's OpenXR Plugin and XR
+Interaction Toolkit manuals, and Meta's device and MQDH documentation.
+
+\textbf{A note on searching for help.} Most Quest tutorials and most Stack Overflow answers
+assume the Meta XR SDK. When you search, add \texttt{OpenXR} and \texttt{XR\ Interaction\ Toolkit} to your
+query, and be suspicious of any answer that tells you to install something from the Asset
+Store. If an answer's first step is ``add a Building Block'', it's solving a different
+problem than the one you have.
+
+\textbf{If a setup problem isn't answered anywhere in these three guides, that's a gap in the
+guides --- tell your tutor so it can be fixed for everyone.}
+
+\end{document}
