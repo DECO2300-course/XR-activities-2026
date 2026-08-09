@@ -66,7 +66,7 @@ place first — putting it in later is much more painful than putting it in earl
 Two halves. The first gets you from "I have a Unity project" to "my build runs on a
 headset" — you read it once, and it ends by pointing you at Unity's VR template so you
 never have to do it by hand again. The second covers the two ways you'll test your work
-week to week, on the headset and in the XR Device Simulator — you'll come back to it all
+week to week, on the headset and in the XR Interaction Simulator — you'll come back to it all
 semester.
 
 ### `Unity_Course.gitignore`

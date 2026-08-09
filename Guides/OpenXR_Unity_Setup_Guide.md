@@ -3,6 +3,8 @@
 **Semester 2, 2026**
 **Meta Quest 2 / 3 / 3S · Windows and macOS**
 
+> Read the **[PDF](OpenXR_Unity_Setup_Guide.pdf)**. This Markdown copy is for reading and diffing in the repository.
+
 This guide has two halves.
 
 **Part 1 is setup.** You do it once, and then you leave it alone. It ends with a scene of
@@ -48,7 +50,7 @@ macOS. You need both — they answer different questions.
 | Workflow | What it's for | Speed | Headset |
 |---|---|---|---|
 | **A — Build to the headset** | The truth. Real performance, real tracking, real comfort. | Minutes | Required |
-| **B — XR Device Simulator** | Fast iteration in the Editor with keyboard and mouse. | Seconds | Not required |
+| **B — XR Interaction Simulator** | Fast iteration in the Editor with keyboard and mouse. | Seconds | Not required |
 
 A third option, **Quest Link**, exists on Windows only and is described briefly in
 section 8. We don't teach it, because these two cover everything and work on every
@@ -217,8 +219,9 @@ import:
 - **Starter Assets** — this contains the default input action maps that bind physical
   controller buttons to named actions. You need it. Without it you have a camera rig with
   no input.
-- **XR Device Simulator** — the fast-iteration workflow from section 11. Import it now
+- **XR Interaction Simulator** — the fast-iteration workflow from section 11. Import it now
   while you're here.
+  <!-- VERIFY: sample name in Package Manager -->
 
 ### 4.4 Later additions
 
@@ -422,7 +425,7 @@ from here is about getting it in front of your eyes.
 You now have two ways to see your work. They are not alternatives to each other — they
 are tools for different moments, and a good week uses both.
 
-| | **A — On the headset** | **B — XR Device Simulator** |
+| | **A — On the headset** | **B — XR Interaction Simulator** |
 |---|---|---|
 | **Speed per iteration** | Minutes | Seconds |
 | **Headset required** | Yes | No |
@@ -551,7 +554,7 @@ pressure in a lab. It takes five minutes on a quiet afternoon.
 
 ---
 
-## 11. Workflow B — The XR Device Simulator
+## 11. Workflow B — The XR Interaction Simulator
 
 The simulator gives you a virtual headset and two virtual controllers driven by your
 keyboard and mouse, running in the Editor's Play mode. No headset, no build, no cable.
@@ -561,8 +564,9 @@ This is where most of your development time should go.
 
 ### 11.1 Setting it up
 
+<!-- VERIFY: sample name in Package Manager -->
 You imported the sample in section 4.3. Find it under
-`Assets/Samples/XR Interaction Toolkit/.../XR Device Simulator/`, and drag the simulator
+`Assets/Samples/XR Interaction Toolkit/.../XR Interaction Simulator/`, and drag the simulator
 prefab into your scene.
 
 That's the whole setup. Press **Play**.

@@ -18,7 +18,7 @@ the walkthrough.
 | Build target | Android Build Support (Quest runs Android) | Windows, macOS |
 | XR runtime | Unity OpenXR Plugin | Windows, macOS |
 | XR interaction | Unity XR Interaction Toolkit | Windows, macOS |
-| In-Editor testing | XR Device Simulator (ships with the Interaction Toolkit) | Windows, macOS |
+| In-Editor testing | XR Interaction Simulator (ships with the Interaction Toolkit) | Windows, macOS |
 | Device tooling | Meta Quest Developer Hub (MQDH) | Windows, macOS |
 | Headset link (optional, not taught) | Meta Quest Link | **Windows only** |
 | Headsets | Meta Quest 2, Quest 3, Quest 3S | — |
@@ -31,7 +31,7 @@ the walkthrough.
 
 > **Mac users, read this first.** Everything in this course works on a Mac, but you
 > cannot use Quest Link to play the headset directly from the Editor — that feature is
-> Windows-only. Instead you have two paths: the **XR Device Simulator** for fast
+> Windows-only. Instead you have two paths: the **XR Interaction Simulator** for fast
 > iteration in the Editor, and building an `.apk` to the headset for the real thing.
 > Neither is optional — the simulator is fast but only the headset tells you the truth.
 > The OpenXR setup guide covers every path.
@@ -93,8 +93,8 @@ If you already installed Unity without these, you can add them later: Unity Hub 
 - Student licence: <https://unity.com/products/unity-student>
 
 ### Documentation
-- Unity Manual: <https://docs.unity3d.com/Manual/index.html>
-- Scripting API: <https://docs.unity3d.com/ScriptReference/index.html>
+- Unity Manual: <https://docs.unity3d.com/6000.3/Documentation/Manual/index.html>
+- Scripting API: <https://docs.unity3d.com/6000.3/Documentation/ScriptReference/index.html>
 - Unity Learn (free structured tutorials): <https://learn.unity.com>
 - Unity Discussions (Q&A / forums): <https://discussions.unity.com>
 
@@ -131,31 +131,32 @@ this list, and that is deliberate — see the note at the end of this section.
 ### XR Plugin Management (`com.unity.xr.management`)
 The Project Settings panel where you enable OpenXR per build target. Install this first.
 
-- Docs: <https://docs.unity3d.com/Packages/com.unity.xr.management@latest>
+- Docs: <https://docs.unity3d.com/Packages/com.unity.xr.management@4.7>
 
 ### Unity OpenXR Plugin (`com.unity.xr.openxr`)
 The cross-vendor XR runtime. This is what makes the project talk to the headset, and it
 supplies the **Meta Quest Support** feature you enable for Android builds.
 
-- Docs: <https://docs.unity3d.com/Packages/com.unity.xr.openxr@latest>
+- Docs: <https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.15>
 - OpenXR standard (background reading): <https://www.khronos.org/openxr/>
 
 ### XR Interaction Toolkit (`com.unity.xr.interaction.toolkit`)
 Unity's interaction framework — the XR Origin rig, controllers, grabbing, teleporting,
 UI rays. **This is the course's interaction layer.** Not optional.
 
-It also ships the **XR Device Simulator** as an importable *sample* (Package Manager →
+<!-- VERIFY: sample name in Package Manager -->
+It also ships the **XR Interaction Simulator** as an importable *sample* (Package Manager →
 XR Interaction Toolkit → **Samples**), which drives a virtual headset and controllers
 with the keyboard and mouse so you can test in Play mode without putting the headset on.
 It works on Windows and macOS alike.
 
-- Docs: <https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@latest>
+- Docs: <https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.5>
 
 ### XR Hands (`com.unity.xr.hands`) — for hand tracking
 Unity's vendor-neutral hand tracking, built on the OpenXR hand tracking extension. Add it
 only when an activity calls for hands rather than controllers.
 
-- Docs: <https://docs.unity3d.com/Packages/com.unity.xr.hands@latest>
+- Docs: <https://docs.unity3d.com/Packages/com.unity.xr.hands@1.6>
 
 ### AR Foundation + Unity OpenXR: Meta — for passthrough and mixed reality
 Passthrough, planes, and anchors on Quest 3 / 3S are reached through **AR Foundation**
@@ -163,8 +164,8 @@ Passthrough, planes, and anchors on Quest 3 / 3S are reached through **AR Founda
 (`com.unity.xr.meta-openxr`). This is the OpenXR route to mixed reality — no Meta SDK
 required. Add these only for the mixed reality activities.
 
-- AR Foundation: <https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@latest>
-- Unity OpenXR: Meta: <https://docs.unity3d.com/Packages/com.unity.xr.meta-openxr@latest>
+- AR Foundation: <https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@6.0>
+- Unity OpenXR: Meta: <https://docs.unity3d.com/Packages/com.unity.xr.meta-openxr@2.5>
 
 > **Why there is no Meta XR All-in-One SDK here.** Meta's SDK and its Building Blocks are
 > a perfectly good way to build for Quest, and most tutorials online use them. This course
