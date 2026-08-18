@@ -58,6 +58,14 @@ template.
 
 **[View Week 3 Materials](Week%2003/README.md)**
 
+### Week 4: Interactive Object Systems
+
+Objects that notice you coming, then selection, carrying and throwing. You hand-build
+*notice me*, *hold me* and *release me* here, so that when the XR Interaction Toolkit does
+all three for you in Week 6, you already know what it is doing.
+
+**[View Week 4 Materials](Week%2004/README.md)**
+
 ## Getting started
 
 1. Work through **[Software and Frameworks](Guides/Software_and_Frameworks.md)** and install the stack
