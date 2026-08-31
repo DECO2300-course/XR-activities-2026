@@ -80,6 +80,19 @@ start. Activity 2 needs a Meta Quest 2 / 3S.
 
 **[View Week 5 Materials](Week%2005/README.md)**
 
+### Week 6: The Interaction Toolkit
+
+The week you stop dropping in prefabs and start assembling interactions from their parts.
+You build a grab Interactable out of a Collider, a Rigidbody and an `XRGrabInteractable`,
+resize an object with two hands inside bounds you set, then write the code that moves a
+held object yourself.
+
+Read **[XR Interaction Toolkit — Core Concepts](Guides/XRInteractionToolkit.md)** before you
+start; the activities use its vocabulary and do not re-explain it. All three are
+simulator-friendly, and each ends with a headset checkpoint.
+
+**[View Week 6 Materials](Week%2006/README.md)**
+
 ## Getting started
 
 1. Work through **[Software and Frameworks](Guides/Software_and_Frameworks.md)** and install the stack
