@@ -84,14 +84,26 @@ start. Activity 2 needs a Meta Quest 2 / 3S.
 
 The week you stop dropping in prefabs and start assembling interactions from their parts.
 You build a grab Interactable out of a Collider, a Rigidbody and an `XRGrabInteractable`,
-resize an object with two hands inside bounds you set, then write the code that moves a
-held object yourself.
+resize an object with two hands inside bounds you set, write the code that moves a held
+object yourself, then build a socket that takes things back and turns what it holds.
 
 Read **[XR Interaction Toolkit — Core Concepts](Guides/XRInteractionToolkit.md)** before you
-start; the activities use its vocabulary and do not re-explain it. All three are
+start; the activities use its vocabulary and do not re-explain it. All four are
 simulator-friendly, and each ends with a headset checkpoint.
 
 **[View Week 6 Materials](Week%2006/README.md)**
+
+### Week 7: Locomotion, Comfort and World-Space UI
+
+The part of XR a monitor cannot show you. You configure teleportation, continuous movement,
+snap turning and smooth turning from XRI's own locomotion providers, add the tunnelling
+comfort vignette, and compare six configurations on your own head. Then you build a
+world-space menu sized in metres rather than pixels, and finish by putting the controllers
+down and driving that same menu with your fingers.
+
+All three activities are **headset required**, and the week adds one package: **XR Hands**.
+
+**[View Week 7 Materials](Week%2007/README.md)**
 
 ## Getting started
 

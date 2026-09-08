@@ -238,15 +238,19 @@ shove the scenery around follows directly from that choice.
 
 ## Extension Activities
 
-### **A socket to put the prop back in**
-Add an **`XRSocketInteractor`** on a small empty object above the table, with a trigger
-Collider. A socket is an Interactor that does not move and accepts Interactables — drop
-`Prop` near it and it snaps home.
+### **Held where you grabbed it**
+The `Attach Point` on the mallet fixes the grip for every grab. The opposite is one field.
+Tick **Use Dynamic Attach** on `Prop`'s **XR Grab Interactable** and the attach point is
+built where the hand took hold, so a cube grabbed by one corner stays held by that corner.
 
-Key detail: **Attach Ease In Time** lives on the `XRGrabInteractable`, not on the socket.
-Set it to a small non-zero value rather than `0`. At exactly zero, an object transferring
-between the socket and a hand can show a one-frame visual skip as it teleports to the new
-attach point.
+Three fields under it decide how literal that is. **Match Position** and **Match Rotation**
+both default to on; turn Match Rotation off and the prop is held at the point you grabbed
+but keeps its own orientation. **Snap To Collider Volume** keeps the attach point on or
+inside the object's Colliders, which is what stops a grab from across the room holding the
+cube by a point in mid-air.
+
+It overrides the **Attach Transform** field while it is on. Tick it on the mallet and the
+handle grip you just built stops applying.
 
 ### **A pulse when you touch something**
 Each `Left Controller` and `Right Controller` already has a **`HapticImpulsePlayer`**. Add

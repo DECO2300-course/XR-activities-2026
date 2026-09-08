@@ -4,8 +4,8 @@ Week 5 got a rig on your head and something grabbable in front of you. Week 6 is
 **interaction vocabulary** — the components that make a grab happen, what each one is
 responsible for, and how to read a component graph you did not write. You will assemble a
 grab Interactable from its parts instead of dropping in a prefab, resize an object with two
-hands, read somebody else's Grab Transformer and say what it does, and then write one of
-your own.
+hands, read somebody else's Grab Transformer and say what it does, write one of your own,
+and build a socket that puts things back where they belong.
 
 ## Before You Start
 
@@ -33,6 +33,12 @@ your own.
 > is why this week is built around the **XR Interaction Simulator** — but the headset
 > checkpoints still mean building an `.apk` and deploying it.
 
+> **Book one headset session for the week, not three.** Every activity is
+> *simulator-friendly* and ends with a headset checkpoint. Those checkpoints are not
+> optional, but they are small, and the sensible way to take them is to finish all three
+> activities at your desk and then run through the checkpoints together in one booking.
+> The headsets are shared.
+
 ## Learning Progression
 
 1. **Interactables from parts** — Collider, Rigidbody, `XRGrabInteractable`, and the three
@@ -43,6 +49,8 @@ your own.
    Inspector, and where the Inspector runs out
 4. **Grab Transformers read** — working out what a transformer somebody else wrote does
 5. **Grab Transformers written** — implementing `IXRGrabTransformer` yourself
+6. **Interactors that do not move** — sockets, the layer masks that decide what they
+   accept, and steering a held object by its attach transform
 
 ## Activities
 
@@ -73,6 +81,13 @@ Work through these in order — each one builds on the scene from the last.
   - Following the hand from the Interactor's attach transform
   - Rainbow hue cycling driven by vertical movement, in HSV
 
+- **[Activity 4](Activity%204%20-%20Sockets.md)** - Sockets *(simulator-friendly)*
+  - `XRSocketInteractor` — an Interactor that never moves and takes no input
+  - Hover meshes, and showing a player where an object will land before they let go
+  - Interaction Layer Masks, and a socket that accepts one thing and refuses the rest
+  - **Socket Scale Mode**, and a stand that resizes whatever is put on it
+  - Turning a socketed object by its attach transform rather than its own transform
+
 ## C# Scripts
 
 Reference copies of the scripts used across these activities are in the `Scripts/`
@@ -85,8 +100,10 @@ directory. Write your own first — these are for checking against, not for past
 - **[MaterialSwapper.cs](Scripts/MaterialSwapper.cs)** - Swaps between two materials from
   Interactable events; used for the poke button in Activity 1 and as an extension in
   Activity 3
+- **[SocketTurntable.cs](Scripts/SocketTurntable.cs)** - Turns a socket's attach transform
+  so that whatever the socket holds turns with it (Activity 4)
 
-> **All three are XRI 3.x.** If your editor cannot resolve a type, read the `using` lines
+> **All four are XRI 3.x.** If your editor cannot resolve a type, read the `using` lines
 > before you rename anything — see
 > [the namespace trap](../Guides/XRInteractionToolkit.md#the-xri-3x-namespace-trap).
 
@@ -95,6 +112,7 @@ directory. Write your own first — these are for checking against, not for past
 By the end of Week 6 you will have a scene in which you built every interaction from its
 components and can explain what each one does: an object you can pick up by a chosen grip
 point, throw with a velocity you tuned, press without pointing at, resize with two hands
-within bounds you set — and one you wrote the movement code for yourself. More usefully,
+within bounds you set, drop into a socket that accepts it and turns it, and one you wrote
+the movement code for yourself. More usefully,
 when an XR scene you did not build refuses to work, you will know the six things to check
 and the order to check them in.
