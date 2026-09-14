@@ -29,11 +29,18 @@ Set-up and workflow reference material. Read these before the weekly activities.
 - **[Guides overview](Guides/README.md)** — what each guide covers and what order to read them in
 - **[Software and Frameworks](Guides/Software_and_Frameworks.md)** — everything to install, with official documentation links
 - **[Unity + GitHub Course Guide](Guides/Unity_GitHub_Course_Guide_V1.pdf)** — account setup through to the daily commit workflow
+- **[Streaming Video from the Headset](Guides/Streaming%20Video%20from%20the%20Headset.md)** — getting what you see in the headset onto a screen, for demos, feedback and recordings
 - **[XR Interaction Toolkit — Core Concepts](Guides/XRInteractionToolkit.md)** — the XRI vocabulary the XR weeks assume: Interactor, Interactable, Grab Transformer
 - **[Unity_Course.gitignore](Guides/Unity_Course.gitignore)** — the `.gitignore` supplied for your course repository
 
 > Install the supplied `.gitignore` **before** you create your Unity project. Adding it
 > afterwards is considerably more painful.
+
+> **Showing somebody what you built.** From Week 5 onward your work only exists inside a
+> headset, where nobody else can see it — including whoever is marking it.
+> **[Streaming Video from the Headset](Guides/Streaming%20Video%20from%20the%20Headset.md)**
+> gets that view onto a screen and shows you how to record it. Worth reading before you need
+> it, not during a demo.
 
 ## Weekly content
 
@@ -104,6 +111,18 @@ down and driving that same menu with your fingers.
 All three activities are **headset required**, and the week adds one package: **XR Hands**.
 
 **[View Week 7 Materials](Week%2007/README.md)**
+
+### Week 8: Visual, Audio and Haptic Feedback
+
+How an object responds when you interact with it. You make a grabbed cube change colour,
+play a sound and vibrate the controller that picked it up, all from one interaction event.
+Then you build four cubes that read as metal, fabric, wood and glass by adding vibration,
+sound and look one at a time, and finish with two held cubes that vibrate more strongly as
+they get closer.
+
+All three activities are **headset required**, and the week adds no packages.
+
+**[View Week 8 Materials](Week%2008/README.md)**
 
 ## Getting started
 

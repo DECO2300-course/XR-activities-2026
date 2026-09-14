@@ -77,6 +77,13 @@ and Activity 3 drives the panel from Activity 2.
   - `XRPokeFilter` on a physical button, and why a uGUI Button cannot have one
   - What a tracked hand costs you, and what it stops costing the player
 
+## Showing your work
+
+Everything this week happens inside the headset, which makes it awkward to show anybody. If
+you need a second pair of eyes on your locomotion, your panel placement or your hand tracking,
+**[Streaming Video from the Headset](../Guides/Streaming%20Video%20from%20the%20Headset.md)**
+covers how to get the view onto a screen and how to record it.
+
 ## C# Scripts
 
 **None in the main activities, and that is deliberate.** Locomotion is the one system in this

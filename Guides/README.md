@@ -60,6 +60,18 @@ daily commit/push workflow, moving between computers, and a troubleshooting sect
 Read this before you create your Unity project, not after. The `.gitignore` has to be in
 place first — putting it in later is much more painful than putting it in early.
 
+### [Streaming Video from the Headset](Streaming%20Video%20from%20the%20Headset.md)
+**How to get what you see in the headset onto a screen**, so other people can watch, and so
+you can record a demo.
+
+Two routes, both without a Meta account beyond the developer mode you already have: Meta
+Quest Developer Hub, which casts over USB or Wi-Fi, and Quest Live View, a small application
+written for this module that shows one eye with the lens distortion removed. Also covers
+recording on the headset itself, and a warning about which networks casting will and will not
+work on.
+
+Read it when you need to show your work to somebody who is not wearing the headset.
+
 ### `OpenXR_Unity_Setup_Guide.pdf`
 **The XR setup and workflow guide.** Source: `OpenXR_Unity_Setup_Guide.tex`.
 
