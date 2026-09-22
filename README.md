@@ -124,6 +124,24 @@ All three activities are **headset required**, and the week adds no packages.
 
 **[View Week 8 Materials](Week%2008/README.md)**
 
+### Week 9: Adding Capabilities with New Packages
+
+The week you add to the stack rather than work within it. You install AR Foundation and
+Unity OpenXR: Meta so your content can read the real room, and place a virtual object on
+your actual desk by pointing at it. Then you turn a hand shape into an event, first by
+authoring two assets and writing no detection code at all, and optionally by reading the
+joint data yourself. Last, you put Meta's own SDKs alongside your OpenXR project for a
+capability OpenXR does not offer, and prove everything still builds.
+
+The habit the week is really teaching: when a feature does nothing, ask whether it is
+switched on, on this device, before asking what is wrong with your code. Almost everything
+here fails silently.
+
+All four activities are **headset required**, Activity 1 wants a Quest 3 / 3S and has a
+Quest 2 route, and the week adds the most packages of any week.
+
+**[View Week 9 Materials](Week%2009/README.md)**
+
 ## Getting started
 
 1. Work through **[Software and Frameworks](Guides/Software_and_Frameworks.md)** and install the stack
